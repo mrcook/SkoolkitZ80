@@ -1,0 +1,126 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: SkoolkitZ80
+uuid: 9bc94818-fe48-433a-adf5-5f0e3b405b2c
+file_extensions:
+  - skool
+scope: source.skoolkit
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  prototype:
+    - include: comments
+
+  main:
+    # The main context is the initial starting point of our syntax.
+    # Include other contexts from here (or specify them directly).
+    - include: opcodes
+    - include: registers
+    - include: data_directives
+    - include: numbers
+    - include: strings
+    - include: asm_directives
+
+  # Note that blackslashes don't need to be escaped within single quoted strings
+  # in YAML. When using single quoted strings, only single quotes need to be
+  # escaped: this is done by using two single quotes next to each other.
+
+  opcodes:
+    - match: '\b(CALL|JP|JR)\b\s+([0-9]+)'
+      captures:
+        1: keyword.control.opcode.ret.skoolkit
+        2: keyword.control.opcode.ret.address.skoolkit
+      comment: "Plain CALL, JP, JR followed by address"
+    - match: '\s*\b(CALL|JP|JR)\b\s+(Z|NZ|C|NC|PO|PE|P|M),([0-9]+)'
+      captures:
+        1: keyword.control.opcode.ret.skoolkit
+        2: keyword.control.opcode.ret.condition.skoolkit
+        3: keyword.control.opcode.ret.address.skoolkit
+      comment: "Special case: conditional CALL/JMP"
+    - match: '\b(DJNZ)\b\s+([0-9]+)'
+      captures:
+        1: keyword.control.opcode.djnz.skoolkit
+        2: keyword.control.opcode.djnz_address.skoolkit
+      comment: "Special case: DJNZ"
+    - match: '(?<=\s|:)(RET)(?:\s+(Z|NZ|C|NC|PO|PE|P|M))?(?=\s|:|;|$)'
+      captures:
+        1: keyword.control.opcode.ret.skoolkit
+        2: keyword.control.opcode.ret.condition.skoolkit
+      comment: "Special case: conditional RET"
+    - match: '\b(ADC|ADD|AND|BIT|CCF|CP|CPL|CPD|CPDR|CPI|CPIR|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INF|INI|INIR||NEG|NOP|EXX|OR|OTDR|OTIR|OUT|OUTD|OUTI|POP|PUSH|RES|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SLI|SLL|SRA|SRL|SUB|XOR)\b'
+      scope: keyword.control.opcode.cpu.skoolkit
+    - match: '\b(LD|LDD|LDDR|LDI|LDIR)\b'
+      scope: keyword.control.opcode.ld.skoolkit
+
+  registers:
+    - match: '\b(A|B|C|D|E|H|L|I|R|XL|LX|XH|HX|IXL|IXH|YL|LY|YH|HY|IYL|IYH)\b'
+      comment: "8-bit register set"
+      scope: keyword.control.register.skoolkit
+    - match: '(\BAF'')|(\b(AF|BC|DE|HL|SP|IX|IY)\b)'
+      comment: "16-bit register set (note: escaped single quote)"
+      scope: keyword.control.register.skoolkit
+    - match: '(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\))'
+      scope: keyword.control.register.pointer.skoolkit
+      comment: "Pointers to registers/address"
+
+  data_directives:
+    - match: '\b(DEFB|DEFM|DEFW|DEFS)\b'
+      scope: storage.type.datadef.asm.skoolkit
+
+  numbers:
+    - match: '^([*bct]+)([0-9]+)\s+'
+      captures:
+        1: comment.line.blockdelimiter.skoolkit
+        2: constant.numeric.address.start.skoolkit
+    - match: '^\s+([0-9]+)\s+'
+      scope: constant.numeric.address.skoolkit
+    - match: '\b([0-9A-F][0-9A-F]){1,2}\b'
+      scope: constant.numeric.hex.skoolkit
+    - match: '\b(@[0-9]+)\b'
+      scope: constant.numeric.octal.skoolkit
+    - match: '\b(%[01]+)\b'
+      scope: constant.numeric.binary.skoolkit
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.skoolkit
+
+  strings:
+    # Strings begin and end with quotes, and use backslashes as an escape character.
+    - match: '"'
+      scope: punctuation.definition.string.begin.skoolkit
+      push: inside_string
+
+  inside_string:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.skoolkit
+    - match: '\.'
+      scope: constant.character.escape.skoolkit
+    - match: '"'
+      scope: punctuation.definition.string.end.skoolkit
+      pop: true
+
+  asm_directives:
+    - match: '^(@(?:label|org))=([A-Z0-9_]+)\s'
+      captures:
+        1: entity.name.directive.skoolkit
+        2: entity.name.directive.value.skoolkit
+    - match: '^(@[a-z]+)\b'
+      scope: entity.name.directive.skoolkit
+
+  comments:
+    # Comments begin with a ';' or //' and finish at the end of the line.
+    - match: ';'
+      scope: punctuation.definition.comment.skoolkit
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.semi-colon.skoolkit
+        - match: $\n?
+          pop: true
+    - match: '//'
+      scope: punctuation.definition.comment.skoolkit
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.double-slash.skoolkit
+        - match: $\n?
+          pop: true
