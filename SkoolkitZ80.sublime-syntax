@@ -32,7 +32,12 @@ contexts:
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.address.skoolkit
-      comment: "Plain CALL, JP, JR followed by address"
+      comment: "CALL, JP, JR an address"
+    - match: '\b(CALL|JP|JR)\b\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\))'
+      captures:
+        1: keyword.control.opcode.ret.skoolkit
+        2: keyword.control.register.pointer.skoolkit
+      comment: "CALL, JP, JR an address via a pointer"
     - match: '\s*\b(CALL|JP|JR)\b\s+(Z|NZ|C|NC|PO|PE|P|M),([0-9]+)'
       captures:
         1: keyword.control.opcode.ret.skoolkit
