@@ -36,8 +36,6 @@ First, locate the SublimeText [packages folder](http://docs.sublimetext.info/en/
 
 Pull requests are welcome.
 
-Do not edit the `SkoolkitZ80.tmLanguage` file directly. Edit the `SkoolkitZ80.YAML-tmLanguage` file instead and build the `.tmLanguage` file from it using [AAAPackageDev](https://github.com/SublimeText/AAAPackageDev).
-
 
 ### License
 
