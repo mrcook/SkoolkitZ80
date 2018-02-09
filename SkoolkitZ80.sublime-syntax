@@ -75,10 +75,14 @@ contexts:
       scope: storage.type.datadef.asm.skoolkit
 
   numbers:
-    - match: '^([*bct]+)([0-9]+)\s+'
+    - match: '^([bct]+)([0-9]+)\s+'
       captures:
-        1: comment.line.blockdelimiter.skoolkit
+        1: comment.line.block_id.skoolkit
         2: constant.numeric.address.start.skoolkit
+    - match: '^(\*)([0-9]+)\s+'
+      captures:
+        1: comment.line.block_id.skoolkit
+        2: constant.numeric.address.jump.skoolkit
     - match: '^\s+([0-9]+)\s+'
       scope: constant.numeric.address.skoolkit
     - match: '\b([0-9A-F][0-9A-F]){1,2}\b'

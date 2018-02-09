@@ -80,6 +80,17 @@
       </dict>
       <dict>
         <key>Name</key>
+        <string>Numeric Address - block ID</string>
+        <key>scope</key>
+        <string>comment.line.block_id</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#75715E</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>Name</key>
         <string>Numeric Address - start of block</string>
         <key>scope</key>
         <string>constant.numeric.address.start</string>
@@ -91,13 +102,13 @@
       </dict>
       <dict>
         <key>Name</key>
-        <string>Numeric Address - start of block</string>
+        <string>Numeric Address - jump point</string>
         <key>scope</key>
-        <string>comment.line.blockdelimiter</string>
+        <string>constant.numeric.address.jump</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#75715E</string>
+          <string>#55829a</string>
         </dict>
       </dict>
       <dict>
