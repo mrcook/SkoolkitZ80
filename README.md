@@ -1,6 +1,8 @@
 # Skoolkit Z80 Assembly Language Syntax Package
 
-SkoolkitZ80 is a Z80 assembly language syntax highlighting package for [Sublime Text 3](https://www.sublimetext.com/), focusing specifically on the `.skool` files produced and used in the [Skoolkit](http://skoolkit.ca/) ZX Spectrum game disassembly toolkit.
+SkoolkitZ80 is a Z80 assembly language syntax highlighting package for [Sublime Text 3](https://www.sublimetext.com/) [dark theme], focusing specifically on the `.skool` files produced and used in the [Skoolkit](http://skoolkit.ca/) ZX Spectrum game disassembly toolkit.
+
+![SkoolkitZ80 Example](images/skoolkitz80-syntax.png?raw=true "Example of SkoolkitZ80 syntax highlighting")
 
 
 ### Installation
@@ -21,9 +23,9 @@ First, locate the SublimeText [packages folder](http://docs.sublimetext.info/en/
 
 ### Roadmap
 
-- Better colours! The current ones are just a first-pass to get something working, but they're a bit harsh in places.
+- ~Better colours! The current ones are just a first-pass to get something working, but they're a bit harsh in places.~
 - Better Z80 syntax highlighting - currently only handle the simpler opcode's.
-- Support for HEX address values throughout.
+- ~Support for HEX address values throughout.~
 - Support Skoolkit loops.
 - Support more Skoolkit block types.
 - Support more Skoolkit ASM directives.
