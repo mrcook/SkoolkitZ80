@@ -7,6 +7,13 @@ file_extensions:
   - skool
 scope: source.skoolkit
 
+variables:
+  address: '\$(?:[0-9A-F]){4}|[0-9]{5}'
+  hex_number: '\$(?:[0-9A-F][0-9A-F]){1,2}'
+  oct_number: '@[0-9]+'
+  bin_number: '%[01]+'
+  dec_number: '-?[0-9.]+'
+
 contexts:
   # The prototype context is prepended to all contexts but those setting
   # meta_include_prototype: false.
@@ -19,6 +26,7 @@ contexts:
     - include: opcodes
     - include: registers
     - include: data_directives
+    - include: addresses
     - include: numbers
     - include: strings
     - include: asm_directives
@@ -28,23 +36,23 @@ contexts:
   # escaped: this is done by using two single quotes next to each other.
 
   opcodes:
-    - match: '\b(CALL|JP|JR)\b\s+([0-9]+)'
+    - match: '\b(CALL|JP|JR)\b\s+({{address}})'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.address.skoolkit
       comment: "CALL, JP, JR an address"
-    - match: '\b(CALL|JP|JR)\b\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\))'
+    - match: '\b(CALL|JP|JR)\b\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.register.pointer.skoolkit
       comment: "CALL, JP, JR an address via a pointer"
-    - match: '\s*\b(CALL|JP|JR)\b\s+(Z|NZ|C|NC|PO|PE|P|M),([0-9]+)'
+    - match: '\s*\b(CALL|JP|JR)\b\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
         3: keyword.control.opcode.ret.address.skoolkit
       comment: "Special case: conditional CALL/JMP"
-    - match: '\b(DJNZ)\b\s+([0-9]+)'
+    - match: '\b(DJNZ)\b\s+({{address}})'
       captures:
         1: keyword.control.opcode.djnz.skoolkit
         2: keyword.control.opcode.djnz_address.skoolkit
@@ -74,24 +82,26 @@ contexts:
     - match: '\b(DEFB|DEFM|DEFW|DEFS)\b'
       scope: storage.type.datadef.asm.skoolkit
 
-  numbers:
-    - match: '^([bct]+)([0-9]+)\s+'
+  addresses:
+    - match: '^([bcgistuw]+)({{address}})\s+'
       captures:
         1: comment.line.block_id.skoolkit
         2: constant.numeric.address.start.skoolkit
-    - match: '^(\*)([0-9]+)\s+'
+    - match: '^(\*)({{address}})\s+'
       captures:
         1: comment.line.block_id.skoolkit
         2: constant.numeric.address.jump.skoolkit
-    - match: '^\s+([0-9]+)\s+'
+    - match: '^\s+({{address}})\s+'
       scope: constant.numeric.address.skoolkit
-    - match: '\b([0-9A-F][0-9A-F]){1,2}\b'
+
+  numbers:
+    - match: '{{hex_number}}'
       scope: constant.numeric.hex.skoolkit
-    - match: '\b(@[0-9]+)\b'
+    - match: '{{oct_number}}'
       scope: constant.numeric.octal.skoolkit
-    - match: '\b(%[01]+)\b'
+    - match: '{{bin_number}}'
       scope: constant.numeric.binary.skoolkit
-    - match: '\b(-)?[0-9.]+\b'
+    - match: '{{dec_number}}'
       scope: constant.numeric.skoolkit
 
   strings:
