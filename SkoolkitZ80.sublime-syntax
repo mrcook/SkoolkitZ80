@@ -36,28 +36,28 @@ contexts:
   # escaped: this is done by using two single quotes next to each other.
 
   opcodes:
-    - match: '\b(CALL|JP|JR)\b\s+({{address}})'
+    - match: '\b(CALL|JP|JR)\s+({{address}})'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.address.skoolkit
       comment: "CALL, JP, JR an address"
-    - match: '\b(CALL|JP|JR)\b\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
+    - match: '\b(CALL|JP|JR)\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.register.pointer.skoolkit
       comment: "CALL, JP, JR an address via a pointer"
-    - match: '\s*\b(CALL|JP|JR)\b\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
+    - match: '\b(CALL|JP|JR)\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
         3: keyword.control.opcode.ret.address.skoolkit
       comment: "Special case: conditional CALL/JMP"
-    - match: '\b(DJNZ)\b\s+({{address}})'
+    - match: '\b(DJNZ)\s+({{address}})'
       captures:
         1: keyword.control.opcode.djnz.skoolkit
         2: keyword.control.opcode.djnz_address.skoolkit
       comment: "Special case: DJNZ"
-    - match: '(?<=\s|:)(RET)(?:\s+(Z|NZ|C|NC|PO|PE|P|M))?(?=\s|:|;|$)'
+    - match: '\b(RET)\b(?:\s+(Z|NZ|C|NC|PO|PE|P|M)\b)?'
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
@@ -71,7 +71,7 @@ contexts:
     - match: '\b(A|B|C|D|E|H|L|I|R|XL|LX|XH|HX|IXL|IXH|YL|LY|YH|HY|IYL|IYH)\b'
       comment: "8-bit register set"
       scope: keyword.control.register.skoolkit
-    - match: '(\BAF'')|(\b(AF|BC|DE|HL|SP|IX|IY)\b)'
+    - match: '\b(?:(AF'')|(AF|BC|DE|HL|SP|IX|IY))\b'
       comment: "16-bit register set (note: escaped single quote)"
       scope: keyword.control.register.skoolkit
     - match: '(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\))'
