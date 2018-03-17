@@ -68,15 +68,21 @@ contexts:
       scope: keyword.control.opcode.ld.skoolkit
 
   registers:
-    - match: '\b(A|B|C|D|E|H|L|I|R|XL|LX|XH|HX|IXL|IXH|YL|LY|YH|HY|IYL|IYH)\b'
-      comment: "8-bit register set"
+    - match: '\b(?:AF|BC|DE|HL)'''
+      comment: "16-bit shadow registers (note: escaped single quote)"
       scope: keyword.control.register.skoolkit
-    - match: '\b(?:(AF'')|(AF|BC|DE|HL|SP|IX|IY))\b'
-      comment: "16-bit register set (note: escaped single quote)"
+    - match: '\b(?:AF|BC|DE|HL|PC|SP|IX|IY)\b'
+      comment: "16-bit registers"
       scope: keyword.control.register.skoolkit
-    - match: '(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\))'
+    - match: '\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\)'
+      comment: "Pointer to 16-bit register/address"
       scope: keyword.control.register.pointer.skoolkit
-      comment: "Pointers to registers/address"
+    - match: '\b(?:HX|HY|LX|LY)\b'
+      comment: "Undocumented 8-bit registers"
+      scope: keyword.control.register.skoolkit
+    - match: '\b(A|B|C|D|E|F|H|I|L|R|IXH|IXL|IYH|IYL|LX|LY|YL|YH)\b'
+      comment: "8-bit registers"
+      scope: keyword.control.register.skoolkit
 
   data_directives:
     - match: '\b(DEFB|DEFM|DEFW|DEFS)\b'
