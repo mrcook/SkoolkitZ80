@@ -37,31 +37,31 @@ contexts:
 
   opcodes:
     - match: '\b(CALL|JP|JR)\s+({{address}})'
+      comment: "CALL, JP, JR an address"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.address.skoolkit
-      comment: "CALL, JP, JR an address"
     - match: '\b(CALL|JP|JR)\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
+      comment: "CALL, JP, JR an address via a pointer"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.register.pointer.skoolkit
-      comment: "CALL, JP, JR an address via a pointer"
     - match: '\b(CALL|JP|JR)\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
+      comment: "Special case: conditional CALL/JMP"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
         3: keyword.control.opcode.ret.address.skoolkit
-      comment: "Special case: conditional CALL/JMP"
     - match: '\b(DJNZ)\s+({{address}})'
+      comment: "Special case: DJNZ"
       captures:
         1: keyword.control.opcode.djnz.skoolkit
         2: keyword.control.opcode.djnz_address.skoolkit
-      comment: "Special case: DJNZ"
     - match: '\b(RET)\b(?:\s+(Z|NZ|C|NC|PO|PE|P|M)\b)?'
+      comment: "Special case: conditional RET"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
-      comment: "Special case: conditional RET"
     - match: '\b(ADC|ADD|AND|BIT|CCF|CP|CPL|CPD|CPDR|CPI|CPIR|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INF|INI|INIR||NEG|NOP|EXX|OR|OTDR|OTIR|OUT|OUTD|OUTI|POP|PUSH|RES|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SLI|SLL|SRA|SRL|SUB|XOR)\b'
       scope: keyword.control.opcode.cpu.skoolkit
     - match: '\b(LD|LDD|LDDR|LDI|LDIR)\b'
@@ -111,8 +111,8 @@ contexts:
       scope: constant.numeric.skoolkit
 
   strings:
-    # Strings begin and end with quotes, and use backslashes as an escape character.
     - match: '"'
+      comment: "Strings begin/end with double quotes"
       scope: punctuation.definition.string.begin.skoolkit
       push: inside_string
 
@@ -134,8 +134,8 @@ contexts:
       scope: entity.name.directive.skoolkit
 
   comments:
-    # Comments begin with a ';' or //' and finish at the end of the line.
     - match: ';'
+      comment: "Skoolkit comments begin with a ';' and finish at EOL"
       scope: punctuation.definition.comment.skoolkit
       push:
         # This is an anonymous context push for brevity.
@@ -143,6 +143,7 @@ contexts:
         - match: $\n?
           pop: true
     - match: '//'
+      comment: "Skoolkit comments can also begin with a '//', and finish at EOL"
       scope: punctuation.definition.comment.skoolkit
       push:
         # This is an anonymous context push for brevity.
