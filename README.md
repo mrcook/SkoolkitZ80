@@ -1,6 +1,6 @@
 # Skoolkit Z80 Assembly Language Syntax Package
 
-SkoolkitZ80 is a Z80 assembly language syntax highlighting package for [Sublime Text 3](https://www.sublimetext.com/) [dark theme], focusing specifically on the `.skool` files produced and used in the [Skoolkit](http://skoolkit.ca/) ZX Spectrum game disassembly toolkit.
+SkoolkitZ80 is a Z80 assembly language syntax highlighting package [dark theme] for [Sublime Text 3](https://www.sublimetext.com/), focusing specifically on the `.skool` files produced and used in the [Skoolkit](http://skoolkit.ca/) ZX Spectrum game disassembly toolkit.
 
 ![SkoolkitZ80 Example](images/skoolkitz80-syntax.png?raw=true "Example of SkoolkitZ80 syntax highlighting")
 
@@ -9,9 +9,7 @@ SkoolkitZ80 is a Z80 assembly language syntax highlighting package for [Sublime 
 
 ##### [Package Control]
 
-Open the SublimeText _Command Palette_ (`Shift-Cmd-P` on OS X, `Shift-Ctrl-P` on Linux/Windows) and select "Package Control: Install Package". Then search for and install SkoolkitZ80.
-
-Note: once installed, _Package Control_ will keep SkoolkitZ80 up-to-date automatically.
+_Not currently supported._
 
 ##### Manual Installation
 
@@ -24,11 +22,12 @@ First, locate the SublimeText [packages folder](http://docs.sublimetext.info/en/
 ### Roadmap
 
 - ~Better colours! The current ones are just a first-pass to get something working, but they're a bit harsh in places.~
-- Better Z80 syntax highlighting - currently only handle the simpler opcode's.
 - ~Support for HEX address values throughout.~
+- ~Support more Skoolkit block types.~
+- ~Support more Skoolkit ASM directives.~
+- Theme: add a _light theme_, or support any currently installed theme.
+- Better Z80 syntax highlighting - currently only handle the simpler opcode's.
 - Support Skoolkit loops.
-- Support more Skoolkit block types.
-- Support more Skoolkit ASM directives.
 - Support Skoolkit macros.
 - Syntax highlighting for Skoolkit CTL files?
 - Highlight comment start/end {...} tags?
