@@ -2,11 +2,6 @@
   // Force the color theme for SkoolKit.
   "color_scheme": "Packages/SkoolkitZ80/SkoolkitZ80.tmTheme",
 
-  "tab_completion": true,
-  "auto_complete": true,
-  "auto_complete_delay": 300,
-  "use_global_completion": false,
-
   // The encoding to use when the encoding can't be determined automatically.
   // ASCII, UTF-8 and UTF-16 encodings will be automatically detected.
   "fallback_encoding": "ASCII",
