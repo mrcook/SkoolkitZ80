@@ -15,20 +15,16 @@ _Not currently supported._
 
 First, locate the SublimeText [packages folder](http://docs.sublimetext.info/en/latest/basic_concepts.html#the-packages-directory) on your OS, then clone with git:
 
-    cd /path/to/sublime/packages/folder
-    git clone https://github.com/mrcook/SkoolkitZ80.git SkoolkitZ80
+    $ cd /path/to/sublime/packages/folder
+    $ git clone https://github.com/mrcook/SkoolkitZ80.git SkoolkitZ80
 
 
 ### Roadmap
 
-- ~Better colours! The current ones are just a first-pass to get something working, but they're a bit harsh in places.~
-- ~Support for HEX address values throughout.~
-- ~Support more Skoolkit block types.~
-- ~Support more Skoolkit ASM directives.~
 - Theme: add a _light theme_, or support any currently installed theme.
-- Better Z80 syntax highlighting - currently only handle the simpler opcode's.
+- Improve handling of more complex Z80 opcodes.
 - Support Skoolkit loops.
-- Support Skoolkit macros.
+- Improve Skoolkit macro support.
 - Syntax highlighting for Skoolkit CTL files?
 - Highlight comment start/end {...} tags?
 
