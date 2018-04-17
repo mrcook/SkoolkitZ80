@@ -4,6 +4,7 @@
 name: SkoolkitZ80
 uuid: 9bc94818-fe48-433a-adf5-5f0e3b405b2c
 file_extensions:
+  - sft
   - skool
 scope: source.skoolkit
 
