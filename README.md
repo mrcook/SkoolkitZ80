@@ -9,7 +9,9 @@ SkoolkitZ80 is a Z80 assembly language syntax highlighting package [dark theme] 
 
 ##### [Package Control]
 
-_Not currently supported._
+Open the SublimeText _Command Palette_ (`Shift-Cmd-P` on OS X, `Shift-Ctrl-P` on Linux/Windows) and select "Package Control: Install Package". Then search for and install SkoolkitZ80.
+
+Note: once installed, _Package Control_ will keep SkoolkitZ80 up-to-date automatically.
 
 ##### Manual Installation
 
