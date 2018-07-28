@@ -9,11 +9,11 @@ file_extensions:
 scope: source.skoolkit
 
 variables:
-  address: '\$(?:[0-9A-F]){4}|[0-9]{5}'
-  hex_number: '\$(?:[0-9A-F][0-9A-F]){1,2}'
-  oct_number: '@[0-9]+'
+  address: '\$(?:[0-9A-Fa-f]){4}|[0-9]{5}'
+  hex_number: '\$(?:[0-9A-Fa-f][0-9A-Fa-f]){1,2}'
+  oct_number: '@[0-7]+'
   bin_number: '%[01]+'
-  dec_number: '-?[0-9.]+'
+  dec_number: '[^$@%][0-9.]+'
 
 contexts:
   # The prototype context is prepended to all contexts but those setting
@@ -24,69 +24,69 @@ contexts:
   main:
     # The main context is the initial starting point of our syntax.
     # Include other contexts from here (or specify them directly).
+    - include: addresses
+    - include: strings
     - include: opcodes
     - include: registers
     - include: data_directives
-    - include: addresses
-    - include: numbers
-    - include: strings
     - include: asm_directives
+    - include: numbers
 
   # Note that blackslashes don't need to be escaped within single quoted strings
   # in YAML. When using single quoted strings, only single quotes need to be
   # escaped: this is done by using two single quotes next to each other.
 
   opcodes:
-    - match: '\b(CALL|JP|JR)\s+({{address}})'
+    - match: '(?i)\b(CALL|JP|JR)\s+({{address}})'
       comment: "CALL, JP, JR an address"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.address.skoolkit
-    - match: '\b(CALL|JP|JR)\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
+    - match: '(?i)\b(CALL|JP|JR)\s+(\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+{{address}})?\))'
       comment: "CALL, JP, JR an address via a pointer"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.register.pointer.skoolkit
-    - match: '\b(CALL|JP|JR)\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
+    - match: '(?i)\b(CALL|JP|JR)\s+(Z|NZ|C|NC|PO|PE|P|M),({{address}})'
       comment: "Special case: conditional CALL/JMP"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
         3: keyword.control.opcode.ret.address.skoolkit
-    - match: '\b(DJNZ)\s+({{address}})'
+    - match: '(?i)\b(DJNZ)\s+({{address}})'
       comment: "Special case: DJNZ"
       captures:
         1: keyword.control.opcode.djnz.skoolkit
         2: keyword.control.opcode.djnz_address.skoolkit
-    - match: '\b(RET)\b(?:\s+(Z|NZ|C|NC|PO|PE|P|M)\b)?'
+    - match: '(?i)\b(RET)\b(?:\s+(Z|NZ|C|NC|PO|PE|P|M)\b)?'
       comment: "Special case: conditional RET"
       captures:
         1: keyword.control.opcode.ret.skoolkit
         2: keyword.control.opcode.ret.condition.skoolkit
-    - match: '\b(ADC|ADD|AND|BIT|CCF|CP|CPL|CPD|CPDR|CPI|CPIR|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INF|INI|INIR||NEG|NOP|EXX|OR|OTDR|OTIR|OUT|OUTD|OUTI|POP|PUSH|RES|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SLI|SLL|SRA|SRL|SUB|XOR)\b'
+    - match: '(?i)\b(ADC|ADD|AND|BIT|CCF|CP|CPL|CPD|CPDR|CPI|CPIR|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INF|INI|INIR||NEG|NOP|EXX|OR|OTDR|OTIR|OUT|OUTD|OUTI|POP|PUSH|RES|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SLI|SLL|SRA|SRL|SUB|XOR)\b'
       scope: keyword.control.opcode.cpu.skoolkit
-    - match: '\b(LD|LDD|LDDR|LDI|LDIR)\b'
+    - match: '(?i)\b(LD|LDD|LDDR|LDI|LDIR)\b'
       scope: keyword.control.opcode.ld.skoolkit
 
   registers:
-    - match: '\b(?:AF|BC|DE|HL)'''
+    - match: '(?i)\b(?:AF|BC|DE|HL)'''
       comment: "16-bit shadow registers (note: escaped single quote)"
       scope: keyword.control.register.skoolkit
-    - match: '\b(?:AF|BC|DE|HL|PC|SP|IX|IY)\b'
+    - match: '(?i)\b(?:AF|BC|DE|HL|PC|SP|IX|IY)\b'
       comment: "16-bit registers"
       scope: keyword.control.register.skoolkit
-    - match: '\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\)'
+    - match: '(?i)\((?:AF|BC|DE|HL|SP|IX|IY|[0-9]+)(?:\+[0-9]+)?\)'
       comment: "Pointer to 16-bit register/address"
       scope: keyword.control.register.pointer.skoolkit
-    - match: '\b(?:HX|HY|LX|LY)\b'
+    - match: '(?i)\b(?:HX|HY|LX|LY)\b'
       comment: "Undocumented 8-bit registers"
       scope: keyword.control.register.skoolkit
-    - match: '\b(A|B|C|D|E|F|H|I|L|R|IXH|IXL|IYH|IYL|LX|LY|YL|YH)\b'
+    - match: '(?i)\b(?:A|B|C|D|E|F|H|I|L|R|IXH|IXL|IYH|IYL|LX|LY|YL|YH)\b'
       comment: "8-bit registers"
       scope: keyword.control.register.skoolkit
 
   data_directives:
-    - match: '\b(DEFB|DEFM|DEFW|DEFS)\b'
+    - match: '(?i)\bDEF[BMWS]\b'
       scope: storage.type.datadef.asm.skoolkit
 
   addresses:
