@@ -127,10 +127,18 @@ contexts:
       pop: true
 
   asm_directives:
-    - match: '^(@(?!isub)(?:.+?))=(.+?)\s'
+    - match: '^(@label=)(.+)\b'
       captures:
         1: entity.name.directive.skoolkit
         2: entity.name.directive.value.skoolkit
+    - match: '^(@equ)=(.+?)='
+      captures:
+        1: entity.name.directive.skoolkit
+        2: entity.name.directive.value.skoolkit
+    - match: '^@[obr]fix[+-](begin|else|end)\b'
+      scope: entity.name.directive.skoolkit
+    - match: '^@rsub\+(?:begin|end)\b'
+      scope: entity.name.directive.skoolkit
     - match: '^(@[a-z]+)\b'
       scope: entity.name.directive.skoolkit
 
