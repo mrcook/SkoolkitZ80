@@ -125,7 +125,7 @@ contexts:
     - match: '"'
       scope: punctuation.definition.string.end.skoolkit
       pop: true
-      
+
   asm_directives:
     - match: '^(@label=)(.+)\b'
       captures:
