@@ -120,7 +120,7 @@ contexts:
   inside_string:
     - meta_include_prototype: false
     - meta_scope: string.quoted.double.skoolkit
-    - match: '\.'
+    - match: '\\.'
       scope: constant.character.escape.skoolkit
     - match: '"'
       scope: punctuation.definition.string.end.skoolkit
